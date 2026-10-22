@@ -111,7 +111,7 @@ fun PantallaMenu(onAgregar: () -> Unit, onEmpezar: () -> Unit) {
                         }
                     }
                 }
-                1 -> Text("Historial")
+                1 ->  PantallaHistorial()
                 2 -> Text("Perfil")
             }
         }

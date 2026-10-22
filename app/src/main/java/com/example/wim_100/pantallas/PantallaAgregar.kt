@@ -33,6 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.example.wim_100.componentes.FormularioCurriculum
+import com.example.wim_100.componentes.FormularioCurriculumState
 
 private data class ItemPestana(val titulo: String, val icono: ImageVector)
 
@@ -40,6 +42,7 @@ private data class ItemPestana(val titulo: String, val icono: ImageVector)
 @Composable
 fun PantallaAgregar(onCancelar: () -> Unit, onGuardar: () -> Unit) {
     var pestana by remember { mutableIntStateOf(0) }
+    val formulario = remember { FormularioCurriculumState() }
 
     val items = listOf(
         ItemPestana("Currículum", Icons.Default.Edit),
@@ -98,7 +101,10 @@ fun PantallaAgregar(onCancelar: () -> Unit, onGuardar: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             when (pestana) {
-                0 -> Text("Datos del currículum")
+                0 -> FormularioCurriculum(
+                    state = formulario,
+                    modifier = Modifier.fillMaxSize()
+                )
                 1 -> Text("Evaluación")
             }
         }
