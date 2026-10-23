@@ -55,6 +55,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.height
+import com.example.wim_100.modelo.EstadoPostulante
+import com.example.wim_100.modelo.Estudio
+import com.example.wim_100.modelo.Postulante
 
 class EstudioState {
     var institucion by mutableStateOf("")
@@ -71,6 +79,7 @@ class FormularioCurriculumState {
     var correo by mutableStateOf("")
     var comuna by mutableStateOf("")
     var nivelIngles by mutableStateOf("")
+    var fotoUri by mutableStateOf<Uri?>(null)
 }
 
 private val nivelesIngles = listOf("Sin conocimientos", "Básico", "Intermedio", "Avanzado", "Nativo")
@@ -92,12 +101,13 @@ fun FormularioCurriculum(
         TarjetaEstudios(state)
         TarjetaContacto(state)
         TarjetaIngles(state)
+        Spacer(modifier = Modifier.height(72.dp))
     }
 }
 
 /** Contenedor con el mismo estilo de borde que TarjetaCurriculum. */
 @Composable
-private fun TarjetaSeccion(
+fun TarjetaSeccion(
     titulo: String? = null,
     icono: ImageVector? = null,
     contenido: @Composable () -> Unit
@@ -133,9 +143,23 @@ private fun TarjetaSeccion(
 // 1) Icono de persona + nombre + edad
 @Composable
 private fun TarjetaDatosPersonales(state: FormularioCurriculumState) {
+    val selectorFoto = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) state.fotoUri = uri
+    }
+
     TarjetaSeccion {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            AvatarPersona(tamano = 90.dp)
+            AvatarPersona(
+                tamano = 90.dp,
+                fotoUri = state.fotoUri,
+                onClick = {
+                    selectorFoto.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                }
+            )
             Spacer(modifier = Modifier.width(16.dp))
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
@@ -220,6 +244,7 @@ private fun CajaEstudio(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(40.dp)
                     .clickable { expandido = !expandido },
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -356,3 +381,19 @@ private fun TarjetaIngles(state: FormularioCurriculumState) {
         }
     }
 }
+
+fun FormularioCurriculumState.aPostulante(): Postulante = Postulante(
+    id = 0, // se asigna al guardar
+    nombre = nombre.trim(),
+    edad = edad.toIntOrNull() ?: 0,
+    descripcion = descripcion.trim(),
+    estudios = estudios
+        .filter { it.institucion.isNotBlank() || it.titulo.isNotBlank() }
+        .map { Estudio(it.institucion.trim(), it.titulo.trim(), it.anioTermino) },
+    telefono = telefono.trim(),
+    correo = correo.trim(),
+    comuna = comuna.trim(),
+    nivelIngles = nivelIngles,
+    fotoUri = fotoUri,
+    estado = EstadoPostulante.PENDIENTE
+)

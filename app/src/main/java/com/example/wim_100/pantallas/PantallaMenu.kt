@@ -36,12 +36,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import com.example.wim_100.componentes.TarjetaCurriculum
+import androidx.compose.material3.MaterialTheme
+import com.example.wim_100.datos.PostulantesEnMemoria
+import com.example.wim_100.modelo.EstadoPostulante
 
 private data class ItemNavegacion(val titulo: String, val icono: ImageVector)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PantallaMenu(onAgregar: () -> Unit, onEmpezar: () -> Unit) {
+fun PantallaMenu(
+    onAgregar: () -> Unit,
+    onEvaluar: (Int) -> Unit,
+    onAdministrarCriterios: () -> Unit,
+    onCerrarSesion: () -> Unit
+) {
     var pestana by remember { mutableIntStateOf(0) }
 
     val items = listOf(
@@ -90,29 +98,34 @@ fun PantallaMenu(onAgregar: () -> Unit, onEmpezar: () -> Unit) {
         ) {
             when (pestana) {
                 0 -> {
-                    val postulantes = listOf(
-                        "Camila Rojas Fuentes" to "24 años · ingreso 27-09-2027",
-                        "Nombre Completo" to "Edad · fecha de ingreso",
-                        "Otra Postulante" to "Edad · fecha de ingreso",
-                        "Una Más" to "Edad · fecha de ingreso",
-                        "Última de Prueba" to "Edad · fecha de ingreso"
-                    )
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        items(postulantes) { (nombre, fecha) ->
-                            TarjetaCurriculum(
-                                nombre = nombre,
-                                fechaIngreso = fecha,
-                                onEvaluar = onEmpezar
-                            )
+                    val pendientes = PostulantesEnMemoria.postulantes
+                        .filter { it.estado == EstadoPostulante.PENDIENTE }
+
+                    if (pendientes.isEmpty()) {
+                        Text(
+                            text = "No hay currículums pendientes",
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(pendientes, key = { it.id }) { postulante ->
+                                TarjetaCurriculum(
+                                    postulante = postulante,
+                                    onEvaluar = { onEvaluar(postulante.id) }
+                                )
+                            }
                         }
                     }
                 }
                 1 ->  PantallaHistorial()
-                2 -> Text("Perfil")
+                2 -> PantallaPerfil(
+                    onAdministrarCriterios = onAdministrarCriterios,
+                    onCerrarSesion = onCerrarSesion
+                )
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,62 +22,61 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.wim_100.modelo.AccionHistorial
+import com.example.wim_100.modelo.RegistroHistorial
 
-enum class ResultadoEvaluacion(val etiqueta: String, val fondo: Color, val texto: Color) {
-    APROBADO("Aprobado", Color(0xFFE8F5E9), Color(0xFF2E7D32)),
-    NO_APROBADO("No aprobado", Color(0xFFFFEBEE), Color(0xFFC62828))
+// Devuelve (color de fondo, color del texto) de la etiqueta de cada acción
+private fun coloresDe(accion: AccionHistorial): Pair<Color, Color> = when (accion) {
+    AccionHistorial.AGREGADO -> Color(0xFFE3F2FD) to Color(0xFF1565C0)
+    AccionHistorial.APROBADO -> Color(0xFFE8F5E9) to Color(0xFF2E7D32)
+    AccionHistorial.NO_APROBADO -> Color(0xFFFFEBEE) to Color(0xFFC62828)
 }
-
-data class RegistroHistorial(
-    val nombre: String,
-    val detalle: String,
-    val resultado: ResultadoEvaluacion
-)
 
 @Composable
 fun TarjetaHistorial(
     registro: RegistroHistorial,
     modifier: Modifier = Modifier
 ) {
+    val (fondo, texto) = coloresDe(registro.accion)
+
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(AlturaTarjeta),
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(2.dp, Color(0xFFDBDAE5)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
+                .fillMaxSize()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            AvatarPersona(tamano = 64.dp)
+            AvatarPersona(tamano = TamanoAvatarTarjeta, fotoUri = registro.postulante.fotoUri)
 
             Spacer(modifier = Modifier.width(12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = registro.nombre,
+                    text = registro.postulante.nombre,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = registro.detalle,
+                    text = "por ${registro.usuario} · ${registro.fecha}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Surface(
-                    shape = RoundedCornerShape(50),
-                    color = registro.resultado.fondo
-                ) {
+                Surface(shape = RoundedCornerShape(50), color = fondo) {
                     Text(
-                        text = registro.resultado.etiqueta,
-                        color = registro.resultado.texto,
+                        text = registro.accion.etiqueta,
+                        color = texto,
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
