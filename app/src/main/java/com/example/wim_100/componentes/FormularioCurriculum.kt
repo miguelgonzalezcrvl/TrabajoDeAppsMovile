@@ -63,6 +63,7 @@ import androidx.compose.foundation.layout.height
 import com.example.wim_100.modelo.EstadoPostulante
 import com.example.wim_100.modelo.Estudio
 import com.example.wim_100.modelo.Postulante
+import com.example.wim_100.datos.Almacen
 
 class EstudioState {
     var institucion by mutableStateOf("")

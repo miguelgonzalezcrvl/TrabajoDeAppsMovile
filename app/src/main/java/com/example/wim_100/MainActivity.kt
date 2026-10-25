@@ -9,10 +9,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.wim_100.pantallas.AppNavigation
 import com.example.wim_100.ui.theme.WIM100Theme
+import com.example.wim_100.datos.Almacen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Almacen.iniciar(this)
         enableEdgeToEdge()
         setContent {
             WIM100Theme {

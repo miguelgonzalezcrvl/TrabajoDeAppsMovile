@@ -1,0 +1,34 @@
+{
+  "usuarios": [
+    {"nombre": "Ana Pérez", "correo": "ana@wim100.cl", "contrasena": "ana12345", "rol": "ADMIN"},
+    {"nombre": "Luis Soto", "correo": "luis@wim100.cl", "contrasena": "luis12345", "rol": "NORMAL"}
+  ],
+  "postulantes": [
+    {"id": 1, "nombre": "Camila Rojas Fuentes", "edad": 24, "descripcion": "Diseñadora gráfica con 2 años de experiencia en branding, diseño de interfaces y estrategia visual para marcas de retail y tecnología.", "estudios": [{"institucion": "Universidad de Chile", "titulo": "Diseño Gráfico", "anioTermino": "2025"}, {"institucion": "Duoc UC", "titulo": "Diplomado en Experiencia de Usuario", "anioTermino": "2026"}], "telefono": "+56 9 1234 5678", "correo": "camila.rojas@ejemplo.com", "comuna": "Santiago", "nivelIngles": "Avanzado", "fechaIngreso": "14-10-2026", "estado": "PENDIENTE"},
+    {"id": 2, "nombre": "Martina Vega Torres", "edad": 29, "descripcion": "Desarrolladora Android con 5 años de experiencia en aplicaciones móviles para banca y retail. Trabaja con Kotlin y Jetpack Compose.", "estudios": [{"institucion": "Universidad de Santiago", "titulo": "Ingeniería en Informática", "anioTermino": "2019"}], "telefono": "+56 9 8765 4321", "correo": "martina.vega@ejemplo.com", "comuna": "Ñuñoa", "nivelIngles": "Avanzado", "fechaIngreso": "15-10-2026", "estado": "PENDIENTE"},
+    {"id": 3, "nombre": "Javiera Núñez Alarcón", "edad": 31, "descripcion": "Analista de datos con experiencia en reportería, SQL y visualización para el sector salud.", "estudios": [{"institucion": "Pontificia Universidad Católica", "titulo": "Ingeniería Civil Industrial", "anioTermino": "2017"}, {"institucion": "Universidad de Chile", "titulo": "Magíster en Ciencia de Datos", "anioTermino": "2021"}], "telefono": "+56 9 5555 1212", "correo": "javiera.nunez@ejemplo.com", "comuna": "Providencia", "nivelIngles": "Intermedio", "fechaIngreso": "16-10-2026", "estado": "PENDIENTE"},
+    {"id": 4, "nombre": "Sofía Mora Díaz", "edad": 27, "descripcion": "Técnica en soporte TI con 4 años atendiendo mesas de ayuda y administrando redes de oficinas pequeñas.", "estudios": [{"institucion": "Inacap", "titulo": "Técnico en Informática", "anioTermino": "2021"}], "telefono": "+56 9 4444 3030", "correo": "sofia.mora@ejemplo.com", "comuna": "Maipú", "nivelIngles": "Básico", "fechaIngreso": "17-10-2026", "estado": "PENDIENTE"},
+    {"id": 5, "nombre": "Daniela Pizarro Soto", "edad": 35, "descripcion": "Jefa de proyectos con 10 años liderando equipos de desarrollo bajo metodologías ágiles.", "estudios": [{"institucion": "Universidad Adolfo Ibáñez", "titulo": "Ingeniería Comercial", "anioTermino": "2013"}, {"institucion": "Duoc UC", "titulo": "Diplomado en Gestión de Proyectos", "anioTermino": "2016"}], "telefono": "+56 9 7777 8888", "correo": "daniela.pizarro@ejemplo.com", "comuna": "Las Condes", "nivelIngles": "Avanzado", "fechaIngreso": "12-10-2026", "estado": "APROBADO"},
+    {"id": 6, "nombre": "Fernanda Contreras Lagos", "edad": 22, "descripcion": "Egresada reciente de diseño con experiencia en prácticas y proyectos académicos.", "estudios": [{"institucion": "Duoc UC", "titulo": "Diseño Digital", "anioTermino": "2026"}], "telefono": "+56 9 3333 9090", "correo": "fernanda.contreras@ejemplo.com", "comuna": "La Florida", "nivelIngles": "Básico", "fechaIngreso": "13-10-2026", "estado": "RECHAZADO"},
+    {"id": 7, "nombre": "Valentina Araya Ríos", "edad": 26, "descripcion": "Ingeniera en sistemas con experiencia en pruebas de software y automatización de QA.", "estudios": [{"institucion": "Universidad Tecnológica Metropolitana", "titulo": "Ingeniería en Informática", "anioTermino": "2022"}], "telefono": "+56 9 2222 6060", "correo": "valentina.araya@ejemplo.com", "comuna": "Santiago", "nivelIngles": "Intermedio", "fechaIngreso": "18-10-2026", "estado": "PENDIENTE"}
+  ],
+  "historial": [
+    {"postulanteId": 5, "usuario": "Ana Pérez", "fecha": "20-10-2026", "accion": "APROBADO"},
+    {"postulanteId": 6, "usuario": "Luis Soto", "fecha": "19-10-2026", "accion": "NO_APROBADO"},
+    {"postulanteId": 7, "usuario": "Luis Soto", "fecha": "18-10-2026", "accion": "AGREGADO"},
+    {"postulanteId": 4, "usuario": "Ana Pérez", "fecha": "17-10-2026", "accion": "AGREGADO"},
+    {"postulanteId": 3, "usuario": "Ana Pérez", "fecha": "16-10-2026", "accion": "AGREGADO"},
+    {"postulanteId": 2, "usuario": "Luis Soto", "fecha": "15-10-2026", "accion": "AGREGADO"},
+    {"postulanteId": 1, "usuario": "Luis Soto", "fecha": "14-10-2026", "accion": "AGREGADO"},
+    {"postulanteId": 6, "usuario": "Ana Pérez", "fecha": "13-10-2026", "accion": "AGREGADO"},
+    {"postulanteId": 5, "usuario": "Luis Soto", "fecha": "12-10-2026", "accion": "AGREGADO"}
+  ],
+  "criterios": [
+    {"definicion": "Mínimo 3 años de experiencia en cargos similares", "puntos": 7},
+    {"definicion": "Disponibilidad para trabajar en Santiago o modalidad híbrida", "puntos": 6},
+    {"definicion": "Nivel de inglés intermedio o superior", "puntos": 5},
+    {"definicion": "Título profesional o técnico en el área exigida", "puntos": 5},
+    {"definicion": "Manejo de herramientas del rubro (Figma o equivalente)", "puntos": 4},
+    {"definicion": "Certificaciones vigentes y comprobadas", "puntos": 2}
+  ]
+}

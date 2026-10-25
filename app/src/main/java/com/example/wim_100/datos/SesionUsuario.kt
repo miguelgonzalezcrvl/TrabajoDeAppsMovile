@@ -4,17 +4,18 @@ import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.wim_100.modelo.Rol
 import com.example.wim_100.modelo.Usuario
 
 object SesionUsuario {
-    private val usuarios = mutableListOf(
-        Usuario("Ana Pérez", "ana@wim100.cl", "ana12345", Rol.ADMIN),
-        Usuario("Luis Soto", "luis@wim100.cl", "luis12345", Rol.NORMAL)
-    )
+    private val usuarios = mutableListOf<Usuario>()
 
     var usuarioActual by mutableStateOf<Usuario?>(null)
         private set
+
+    fun cargar(guardados: List<Usuario>) {
+        usuarios.clear()
+        usuarios.addAll(guardados)
+    }
 
     fun iniciarSesion(correo: String, contrasena: String): Boolean {
         val usuario = usuarios.find {
@@ -30,6 +31,8 @@ object SesionUsuario {
         val indice = usuarios.indexOfFirst { it.correo == actual.correo }
         if (indice >= 0) usuarios[indice] = actualizado
         usuarioActual = actualizado
+        if (actual.fotoUri != fotoUri) Almacen.borrarFoto(actual.fotoUri)
+        Almacen.guardarUsuarios(usuarios.toList())
     }
 
     fun cerrarSesion() {

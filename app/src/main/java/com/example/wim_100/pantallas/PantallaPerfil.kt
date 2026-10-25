@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.wim_100.componentes.AvatarPersona
+import com.example.wim_100.datos.Almacen
 import com.example.wim_100.datos.SesionUsuario
 import com.example.wim_100.modelo.Rol
 
@@ -46,7 +47,7 @@ fun PantallaPerfil(
     val selectorFoto = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        if (uri != null) SesionUsuario.actualizarFoto(uri)
+        if (uri != null) Almacen.copiarFoto(uri)?.let { SesionUsuario.actualizarFoto(it) }
     }
 
     Column(
