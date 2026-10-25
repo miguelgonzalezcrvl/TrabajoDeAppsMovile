@@ -147,7 +147,7 @@ private fun TarjetaDatosPersonales(state: FormularioCurriculumState) {
     val selectorFoto = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        if (uri != null) state.fotoUri = uri
+        if (uri != null) state.fotoUri = Almacen.copiarFoto(uri) ?: uri
     }
 
     TarjetaSeccion {
